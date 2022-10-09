@@ -1,0 +1,32 @@
+.card {
+  border: 1px solid lightgrey;
+  border-radius: 12px;
+  width: 30%;
+  .header {
+    margin: 20px;
+  }
+
+  .divider {
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+  }
+
+  .wrapper {
+    margin-bottom: 30px;
+  }
+
+  .form {
+    margin-top: 10px;
+  }
+  .daylight {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .select {
+    margin-right: 30px;
+    margin-left: 30px;
+  }
+}
