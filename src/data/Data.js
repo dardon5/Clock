@@ -41,7 +41,7 @@ export default [
   },
   {
     label: "IET",
-    value: "America/Indiana",
+    value: "America/Indiana/Indianapolis",
     offset: -5,
   },
   {
@@ -56,12 +56,12 @@ export default [
   },
   {
     label: "AGT",
-    value: "America/Argentina",
+    value: "America/Buenos_Aires",
     offset: -3,
   },
   {
     label: "BET",
-    value: "America/Brazil",
+    value: "America/Fortaleza",
     offset: -3,
   },
   {
@@ -96,7 +96,7 @@ export default [
   },
   {
     label: "EAT",
-    value: "Europe/Instanbul",
+    value: "Asia/Qatar",
     offset: 3,
   },
   {
