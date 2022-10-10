@@ -9,8 +9,9 @@
 ### Defaults:
   1. Time: 00:00, shows as 24:00 because of how the Date object works in Javascript.
   2. Timezone: GMT
-  3. Daylight savings: Off
-  4. Alarm: Off
+  3. Mode: 24-hour
+  4. Daylight savings: Off
+  5. Alarm: Off
 ### Usage:
   1. Change Timezone: Click on the arrow in the Select Timezone box.
   2. Toggle Daylight savings: Click on switch to toggle.
