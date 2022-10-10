@@ -1,7 +1,7 @@
 ## To use this software do the following steps:
 1. Open a terminal on your computer.
-2. In the terminal change the directory to the clock file.
-3. Once in this directory run the command `yarn start`.
+2. In the terminal change the directory to the clock folder.
+3. Once in this directory, run the command `yarn start`.
 4. If step 3 does not work run the command `yarn` and repeat step 3.
 5. Enjoy!
 
