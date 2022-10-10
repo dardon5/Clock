@@ -5,10 +5,12 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import { FormGroup, tableBodyClasses } from "@mui/material";
+import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import "./Clock.scss";
 import Select from "react-select/";
 import data from "../data/Data";
+import sound from "../alarmSound.mp3";
 
 export default class Clock extends Component {
   constructor(props) {
@@ -19,13 +21,17 @@ export default class Clock extends Component {
       options: data,
       mode: true,
       daylight: false,
-      alarmTime: "",
+      alarmTime: null,
+      show: false,
+      audio: new Audio(sound),
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleMode = this.handleMode.bind(this);
     this.handleDaylight = this.handleDaylight.bind(this);
     this.handleAlarm = this.handleAlarm.bind(this);
     this.checkAlarm = this.checkAlarm.bind(this);
+    this.toggleAlarm = this.toggleAlarm.bind(this);
+    this.toggleAudio = this.toggleAudio.bind(this);
   }
 
   componentDidMount() {
@@ -44,8 +50,8 @@ export default class Clock extends Component {
 
   handleChange(selectedOption) {
     console.log(`Option selected:`, selectedOption);
-    let newZone = this.state.options[this.state.options.indexOf(selectedOption)]
-      .value;
+    let newZone =
+      this.state.options[this.state.options.indexOf(selectedOption)].value;
     this.setState({
       tZone: newZone,
     });
@@ -71,19 +77,46 @@ export default class Clock extends Component {
       clock: newTime,
     });
   }
-  handleAlarm() {}
+
+  handleAlarm(event) {
+    event.preventDefault();
+    const inputAlarmTimeModified = event.target.value.split(":");
+    let hour = parseInt(inputAlarmTimeModified[0]);
+    let minute = parseInt(inputAlarmTimeModified[1]);
+    let aTime = new Date(this.state.clock).setHours(hour + 20, minute, 0, 0);
+
+    this.setState({
+      alarmTime: aTime,
+    });
+  }
 
   checkAlarm() {
-    if (this.state.alarmTime == "undefined" || !this.state.alarmTime) {
-      this.alarmMessage = "";
+    let global = new Date(this.state.clock).toUTCString();
+    let aa = new Date(this.state.alarmTime).toUTCString();
+    if (this.state.clock === this.state.alarmTime) {
+      this.setState({
+        show: true,
+      });
+      this.toggleAudio();
+      setTimeout(function () {
+        this.setState({
+          show: false,
+        });
+      }, 60000);
     } else {
-      this.alarmMessage = "Your alarm is set for " + this.state.alarmTime + ".";
-      if (this.state.clock === this.state.alarmTime) {
-        window.location.href =
-          "https://www.freespecialeffects.co.uk/soundfx/sirens/alarm_01.wav";
-      } else {
-        console.log("not yet");
-      }
+    }
+  }
+
+  toggleAlarm() {
+    this.setState({
+      show: !this.state.show,
+    });
+    this.state.audio.pause();
+  }
+  toggleAudio() {
+    if (this.state.show) {
+      this.state.audio.play();
+      this.state.audio.loop = this.state.show;
     }
   }
 
@@ -100,8 +133,8 @@ export default class Clock extends Component {
           {this.state.tZone}: {"  "}
           {new Date(this.state.clock).toLocaleTimeString("en-US", {
             timeZone: this.state.tZone,
-            // hour: "2-digit",
-            // minute: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
             hour12: !this.state.mode,
           })}
           <div className="form">
@@ -144,6 +177,23 @@ export default class Clock extends Component {
           </div>
           <div className="alarm">
             <h2>{this.alarmMessage}</h2>
+            <form>
+              Set Alarm: {"  "}
+              <input type="time" onChange={this.handleAlarm}></input>
+            </form>
+          </div>
+          <div className="button">
+            <Button
+              variant="outlined"
+              component="span"
+              color={this.state.show ? "error" : "success"}
+              onClick={this.toggleAlarm}
+              disabled={!this.state.show}
+            >
+              {!this.state.show
+                ? "No Alarm"
+                : "Alarm Active! Click to turn off"}
+            </Button>
           </div>
         </div>
       </div>
